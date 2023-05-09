@@ -1,6 +1,7 @@
 package com.matheusfabiao.produtosapi.controller;
 
 import com.matheusfabiao.produtosapi.model.Produto;
+import com.matheusfabiao.produtosapi.model.Resposta;
 import com.matheusfabiao.produtosapi.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +26,22 @@ public class ProdutoController {
         return produto_service.listar();
     }
 
+    //rota de cadastro de produtos
     @PostMapping("/cadastrar")
     public ResponseEntity<?> cadastrar(@RequestBody Produto produto){
         return produto_service.cadastrarAlterar(produto,"cadastrar");
     }
 
+    //rota de alteração de produtos
     @PutMapping("/alterar")
     public ResponseEntity<?> alterar(@RequestBody Produto produto){
         return produto_service.cadastrarAlterar(produto,"alterar");
+    }
+
+    //rota de remoção de produtos por ID
+    @DeleteMapping("/remover/{id}")
+    public ResponseEntity<Resposta> remover(@PathVariable long id){
+        return produto_service.remover(id);
     }
 
 }

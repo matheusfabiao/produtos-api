@@ -26,20 +26,27 @@ public class ProdutoService {
     }
 
     //método para cadastrar ou alterar produtos
-    public ResponseEntity<?> cadastrarAlterar(Produto produto, String acao){
-        if(produto.getNome().equals("")){ //se não for digitado o nome retorne um erro
+    public ResponseEntity<?> cadastrarAlterar(Produto produto, String acao) {
+        if (produto.getNome().equals("")) { //se não for digitado o nome retorne um erro
             resposta.setMensagem("O nome do produto é obrigatório!");
             return new ResponseEntity<Resposta>(resposta, HttpStatus.BAD_REQUEST);
         } else if (produto.getMarca().equals("")) { //se não for digitada a marca retorne um erro
             resposta.setMensagem("A marca do produto é obrigatória!");
-            return new ResponseEntity<Resposta>(resposta,HttpStatus.BAD_REQUEST);
-        }else {
-            if (acao.equals("cadastrar")){
-                return new ResponseEntity<Produto>(produto_repository.save(produto),HttpStatus.CREATED);
-            }else {
-                return new ResponseEntity<Produto>(produto_repository.save(produto),HttpStatus.OK);
+            return new ResponseEntity<Resposta>(resposta, HttpStatus.BAD_REQUEST);
+        } else {
+            if (acao.equals("cadastrar")) {
+                return new ResponseEntity<Produto>(produto_repository.save(produto), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<Produto>(produto_repository.save(produto), HttpStatus.OK);
             }
+        }
+    }
+
+        //método para remover produtos
+        public ResponseEntity<Resposta> remover(long id) {
+            produto_repository.deleteById(id);
+            resposta.setMensagem("O produto foi removido com sucesso!");
+            return new ResponseEntity<Resposta>(resposta,HttpStatus.OK);
         }
 
     }
-}
