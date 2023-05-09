@@ -25,8 +25,8 @@ public class ProdutoService {
         return produto_repository.findAll();
     }
 
-    //método para cadastrar produtos
-    public ResponseEntity<?> cadastrar(Produto produto){
+    //método para cadastrar ou alterar produtos
+    public ResponseEntity<?> cadastrarAlterar(Produto produto, String acao){
         if(produto.getNome().equals("")){ //se não for digitado o nome retorne um erro
             resposta.setMensagem("O nome do produto é obrigatório!");
             return new ResponseEntity<Resposta>(resposta, HttpStatus.BAD_REQUEST);
@@ -34,7 +34,11 @@ public class ProdutoService {
             resposta.setMensagem("A marca do produto é obrigatória!");
             return new ResponseEntity<Resposta>(resposta,HttpStatus.BAD_REQUEST);
         }else {
-            return new ResponseEntity<Produto>(produto_repository.save(produto),HttpStatus.CREATED);
+            if (acao.equals("cadastrar")){
+                return new ResponseEntity<Produto>(produto_repository.save(produto),HttpStatus.CREATED);
+            }else {
+                return new ResponseEntity<Produto>(produto_repository.save(produto),HttpStatus.OK);
+            }
         }
 
     }
