@@ -3,7 +3,10 @@ package com.matheusfabiao.produtosapi.controller;
 import com.matheusfabiao.produtosapi.model.Produto;
 import com.matheusfabiao.produtosapi.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -24,4 +27,10 @@ public class ProdutoController {
     public List<Produto> listar(){
         return produto_service.listar();
     }
+
+    @PostMapping("/cadastrar")
+    public ResponseEntity<?> cadastrar(@RequestBody Produto produto){
+        return produto_service.cadastrar(produto);
+    }
+
 }
